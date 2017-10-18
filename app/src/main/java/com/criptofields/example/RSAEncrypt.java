@@ -10,59 +10,51 @@ import java.security.PublicKey;
 
 import javax.crypto.Cipher;
 /**
- * RSA Helper Encryption Class
+ * KEY_TYPE_RSA Helper Encryption Class
  */
-public class RSAEncryptDecrypt {
+public class RSAEncrypt {
 
-    //key length
-    public static final int KEY_LENGTH = 2048;
-    //main family of rsa
-    public static final String RSA = "RSA";
+    public static final String KEY_TYPE_RSA = "RSA";
 
-    /**
-     * generate a 2048 bit RSA key
-     *
-     * @return a 2048 bit rsa key
-     */
-    public static KeyPair generateRSAKey()
+    public static KeyPair generateKey(int keylenght)
     {
-        KeyPairGenerator kpg = null;
+        KeyPairGenerator keyPairGenerator = null;
         try
         {
-            //get an RSA key generator
-            kpg = KeyPairGenerator.getInstance(RSA);
+            //get an KEY_TYPE_RSA key generator
+            keyPairGenerator = KeyPairGenerator.getInstance(KEY_TYPE_RSA);
+            //initialize the key to 2048 bits
+            keyPairGenerator.initialize(keylenght);
+            //return the generated key pair
+            return keyPairGenerator.genKeyPair();
         }
         catch (NoSuchAlgorithmException e)
         {
-            Log.e(RSAEncryptDecrypt.class.getName(), e.getMessage(), e);
-            throw new RuntimeException(e);
+            Log.d("TAGTAG", e.getMessage());
+            return null;
         }
-        //initialize the key to 2048 bits
-        kpg.initialize(KEY_LENGTH);
-        //return the generated key pair
-        return kpg.genKeyPair();
     }
 
     /**
-     * main RSA encrypt method
+     * main KEY_TYPE_RSA encrypt method
      *
      * @param plain     plain text you want to encrypt
      * @param publicKey public key to encrypt with
      * @return          encrypted text
      */
-    public static byte[] encryptRSA(byte[] plain, PublicKey publicKey)
+    public static byte[] encrypt(byte[] plain, PublicKey publicKey)
     {
         byte[] enc = null;
         try
         {
-            Cipher cipher = Cipher.getInstance(RSA);
+            Cipher cipher = Cipher.getInstance(KEY_TYPE_RSA);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             enc = cipher.doFinal(plain);
         }
         //no need to catch 4 different exceptions
         catch (Exception e)
         {
-            Log.e(RSAEncryptDecrypt.class.getName(), e.getMessage(), e);
+            Log.e(RSAEncrypt.class.getName(), e.getMessage(), e);
             throw new RuntimeException(e);
         }
 
@@ -70,7 +62,7 @@ public class RSAEncryptDecrypt {
     }
 
     /**
-     *  main RSA decrypt method
+     *  main KEY_TYPE_RSA decrypt method
      *
      * @param enc           encrypted text you want to dcrypt
      * @param privateKey    private key to use for decryption
@@ -81,14 +73,14 @@ public class RSAEncryptDecrypt {
         byte[] plain = null;
         try
         {
-            Cipher cipher = Cipher.getInstance(RSA);
+            Cipher cipher = Cipher.getInstance(KEY_TYPE_RSA);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             plain = cipher.doFinal(enc);
         }
         //no need to catch 4 different exceptions
         catch (Exception e)
         {
-            Log.e(RSAEncryptDecrypt.class.getName(), e.getMessage(), e);
+            Log.e(RSAEncrypt.class.getName(), e.getMessage(), e);
             throw new RuntimeException(e);
         }
         return plain;

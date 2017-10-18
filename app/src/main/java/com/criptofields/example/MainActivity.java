@@ -19,6 +19,7 @@ import javax.crypto.SecretKey;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int KEY_LENGTH = 2048;
     private KeyPair rsaKey;
 
     @Override
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("TAGTAG", "Output text " + encryptedText);
 
         // GET KEY (GENERATE OR GET FROM CERTIFICATE
-        this.rsaKey = RSAEncryptDecrypt.generateRSAKey();
+        this.rsaKey = RSAEncrypt.generateKey(KEY_LENGTH);
 
         //create an inputstream from a string
         try {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     new ByteArrayInputStream(inputText.getBytes("UTF-8"));
 
             //encrypt the combined keys using rsa and store the encrypted value
-            byte[] encryptedAESKey = RSAEncryptDecrypt.encryptRSA(
+            byte[] encryptedAESKey = RSAEncrypt.encrypt(
                     inputText.getBytes(Charset.forName("UTF-8")),
                     this.rsaKey.getPublic());
 
