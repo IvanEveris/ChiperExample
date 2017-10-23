@@ -39,7 +39,7 @@ public class RSAEncrypt {
      * main KEY_TYPE_RSA encrypt method
      *
      * @param plain     plain text you want to encrypt
-     * @param publicKey public key to encrypt with
+     * @param publicKey public_key key to encrypt with
      * @return          encrypted text
      */
     public static byte[] encrypt(byte[] plain, PublicKey publicKey)
@@ -65,7 +65,7 @@ public class RSAEncrypt {
      *  main KEY_TYPE_RSA decrypt method
      *
      * @param enc           encrypted text you want to dcrypt
-     * @param privateKey    private key to use for decryption
+     * @param privateKey    private_key key to use for decryption
      * @return              plain text
      */
     public static byte[] decryptRSA(byte[] enc, PrivateKey privateKey)
